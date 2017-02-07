@@ -15,8 +15,11 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Unbinder unbinder;
 
 //    @BindView(R.id.main_tv1)
 //    TextView tv1;//绑定view
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);//绑定到当前activity身上
+        unbinder = ButterKnife.bind(this);//绑定到当前activity身上
 
         //单行复制，ctrl + d
 //        tv1.setText("大家好！");
@@ -75,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //butterknife解绑，释放资源
+        unbinder.unbind();
+    }
 }
